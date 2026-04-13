@@ -45,7 +45,10 @@ function escapeHtml(value) {
 
 /* Save selected IDs so choices stay after reload */
 function saveSelectedProducts() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(selectedProductIds)));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(Array.from(selectedProductIds)),
+  );
 }
 
 /* Load selected IDs from localStorage */
@@ -109,7 +112,7 @@ function renderSelectedProducts() {
           Remove
         </button>
       </div>
-    `
+    `,
     )
     .join("");
 
@@ -176,7 +179,7 @@ function toggleProductSelection(productId) {
   /* Refresh category grid so selected border/highlight updates */
   if (categoryFilter.value) {
     const filteredProducts = allProducts.filter(
-      (product) => product.category === categoryFilter.value
+      (product) => product.category === categoryFilter.value,
     );
     displayProducts(filteredProducts);
   }
@@ -187,7 +190,7 @@ categoryFilter.addEventListener("change", (event) => {
   const selectedCategory = event.target.value;
 
   const filteredProducts = allProducts.filter(
-    (product) => product.category === selectedCategory
+    (product) => product.category === selectedCategory,
   );
 
   displayProducts(filteredProducts);
@@ -199,7 +202,8 @@ productsContainer.addEventListener("click", (event) => {
   if (descriptionToggleButton) {
     const card = descriptionToggleButton.closest(".product-card");
     const description = card.querySelector(".product-description");
-    const isExpanded = descriptionToggleButton.getAttribute("aria-expanded") === "true";
+    const isExpanded =
+      descriptionToggleButton.getAttribute("aria-expanded") === "true";
 
     descriptionToggleButton.setAttribute("aria-expanded", String(!isExpanded));
     descriptionToggleButton.textContent = isExpanded
@@ -254,7 +258,7 @@ selectedProductsList.addEventListener("click", (event) => {
 
   if (categoryFilter.value) {
     const filteredProducts = allProducts.filter(
-      (product) => product.category === categoryFilter.value
+      (product) => product.category === categoryFilter.value,
     );
     displayProducts(filteredProducts);
   }
@@ -268,7 +272,7 @@ clearSelectionsBtn.addEventListener("click", () => {
 
   if (categoryFilter.value) {
     const filteredProducts = allProducts.filter(
-      (product) => product.category === categoryFilter.value
+      (product) => product.category === categoryFilter.value,
     );
     displayProducts(filteredProducts);
   }
@@ -295,7 +299,7 @@ async function fetchOpenAIResponse(messages) {
       console.error("API error:", response.status, responseText);
       appendChatMessage(
         "assistant",
-        "There was an error calling the API. Please try again."
+        "There was an error calling the API. Please try again.",
       );
       return null;
     }
@@ -306,7 +310,7 @@ async function fetchOpenAIResponse(messages) {
     console.error("Network error:", error);
     appendChatMessage(
       "assistant",
-      "Network error while contacting the API. Please try again."
+      "Network error while contacting the API. Please try again.",
     );
     return null;
   }
@@ -339,7 +343,7 @@ generateRoutineBtn.addEventListener("click", async () => {
       content: `Create a personalized routine using only these selected products:\n${JSON.stringify(
         selectedProductData,
         null,
-        2
+        2,
       )}`,
     },
   ];
@@ -388,7 +392,7 @@ chatForm.addEventListener("submit", async (event) => {
   if (!routineGenerated) {
     appendChatMessage(
       "assistant",
-      "Generate a routine first, then ask follow-up questions in this chat."
+      "Generate a routine first, then ask follow-up questions in this chat.",
     );
     userInput.value = "";
     return;
@@ -397,7 +401,7 @@ chatForm.addEventListener("submit", async (event) => {
   if (!BEAUTY_TOPIC_REGEX.test(messageText)) {
     appendChatMessage(
       "assistant",
-      "Please ask about your routine or beauty topics like skincare, haircare, makeup, or fragrance."
+      "Please ask about your routine or beauty topics like skincare, haircare, makeup, or fragrance.",
     );
     userInput.value = "";
     return;
@@ -424,7 +428,7 @@ async function initApp() {
   renderSelectedProducts();
   appendChatMessage(
     "assistant",
-    "Pick products, click Generate Routine, then ask follow-up beauty questions here."
+    "Pick products, click Generate Routine, then ask follow-up beauty questions here.",
   );
 }
 
